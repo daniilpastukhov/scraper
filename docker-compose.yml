@@ -1,0 +1,38 @@
+version: '3.9'
+
+
+services:
+  flask:
+    container_name: '${PROJECT_NAME}_flask'
+    build:
+      context: .
+      dockerfile: .docker/flask/Dockerfile
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    ports:
+      - "${FLASK_PORT}:${FLASK_PORT}"
+
+  postgres:
+    container_name: '${PROJECT_NAME}_postres'
+    build:
+      context: .
+      dockerfile: .docker/postgres/Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+
+  scraper:
+    container_name: '${PROJECT_NAME}_scraper'
+    build:
+      context: .
+      dockerfile: .docker/scraper/Dockerfile
+    depends_on:
+      - postgres
+    env_file:
+      - .env
