@@ -1,0 +1,5 @@
+scrapy
+scrapy-playwright
+scrapy-user-agents
+scrapy-rotating-proxies
+psycopg2
