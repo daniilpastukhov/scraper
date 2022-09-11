@@ -29,6 +29,7 @@ services:
 
   scraper:
     container_name: '${PROJECT_NAME}_scraper'
+    restart: on-failure
     build:
       context: .
       dockerfile: .docker/scraper/Dockerfile
